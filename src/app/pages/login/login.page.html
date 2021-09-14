@@ -1,42 +1,37 @@
 <ion-content>
-  <ion-title class="ion-padding-top ion-text-center">
+  <div class="ion-padding-top ion-text-center title">
     <ion-label>
       <h1>RegistroAPP</h1>
       <p>Registra tu asistencia</p>
     </ion-label>
-  </ion-title>
-
-  <div class="ion-padding-vertical">
-    <ion-card class="ion-text-center ion-padding-vertical">
-      <ion-card-title class="ion-text-center">
-        <ion-label>
-          <h2>¡Bienvenido!</h2>
-        </ion-label>
-      </ion-card-title>
-
-      <ion-card-content>
-        <ion-item>
-          <ion-label position="floating">Usuario</ion-label>
-          <ion-input
-            type="text"
-            [(ngModel)]="usuario.nombreUsuario"
-          ></ion-input>
-        </ion-item>   
-        <ion-item>
-          <ion-label position="floating">Contraseña</ion-label>
-          <ion-input type="password" [(ngModel)]="usuario.password"></ion-input>
-        </ion-item>
-        <ion-row>
-          <ion-col size="12">
-            <ion-button shape="block" (click)="ingresar()">Ingresar</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
-      <ion-label>
-        <br />
-        <a routerLink="" (click)="restablecer()">Restablecer Contraseña</a>
-      </ion-label>
-    </ion-card>
   </div>
   
+
+  <ion-card class="ion-text-center ion-padding-vertical login-card">
+    <ion-card-title class="ion-text-center">
+      <ion-label>
+        <h2>¡Bienvenido!</h2>
+      </ion-label>
+    </ion-card-title>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Usuario</ion-label>
+        <ion-input type="text" [(ngModel)]="usuario.nombreUsuario"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="usuario.password"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button shape="block" (click)="ingresar()">Ingresar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+    <ion-label>
+      <br />
+      <a routerLink (click)="restablecer()">Restablecer Contraseña</a>
+    </ion-label>
+  </ion-card>
 </ion-content>
