@@ -7,6 +7,7 @@ import { Usuario } from 'src/app/model/Usuario';
 import { Persona } from 'src/app/model/Persona';
 import { Animation, AnimationController } from '@ionic/angular';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -70,4 +71,5 @@ export class HomePage implements OnInit {
 
     await alert.present();
   }
+
 }

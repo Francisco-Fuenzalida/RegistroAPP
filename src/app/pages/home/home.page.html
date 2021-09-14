@@ -1,31 +1,23 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>
-      RegistroAPP
-    </ion-title>
+    <ion-title> RegistroAPP </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding [fullscreen]="true" class="ion-padding-horizontal">
   <ion-title class="ion-padding-top">
-    <ion-label id="titulo">
-      <h1 class="ion-text-center">
-        <p *ngIf="usuario">Bienvenido {{ usuario.nombreUsuario }}</p>
-      </h1>
-
+    <ion-label class="ion-text-center">
+      <p *ngIf="usuario">¡Bienvenido! {{ usuario.nombreUsuario }}</p>
     </ion-label>
   </ion-title>
 
-  <ion-col id="boton">
-    <ion-button shape="block">Marcar Asistencia</ion-button>
-  </ion-col>
-
+  <mat-card class="card ion-text-center">
+    <button mat-raised-button color="accent"><ion-icon name="qr-code-outline"></ion-icon>  Registra tu asistencia</button>
+  </mat-card>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar color="primary">
-    <ion-title class="ion-text-left ion-text">
-
-    </ion-title>
+    <ion-title class="ion-text-left ion-text"> </ion-title>
   </ion-toolbar>
 </ion-footer>
