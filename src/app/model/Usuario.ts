@@ -6,8 +6,8 @@ export class Usuario {
         if (this.nombreUsuario.trim() === '') {
             return 'Para ingresar al sistema debe ingresar un nombre de usuario.';
         }
-        if (this.nombreUsuario.length < 3 || this.nombreUsuario.length > 8) {
-            return 'El nombre de usuario debe tener entre 3 y 8 caracteres.';
+        if (this.nombreUsuario.length < 3 || this.nombreUsuario.length > 9) {
+            return 'El nombre de usuario debe tener entre 3 y 9 caracteres.';
         }
         return '';
     }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController, Animation, AnimationController } from '@ionic/angular';
+import { type } from 'os';
 import { Usuario } from 'src/app/model/Usuario';
+
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,9 @@ export class LoginPage implements OnInit {
 
   public usuario: Usuario;
 
-  constructor(private router: Router, private toastController: ToastController) {
+  constructor(private router: Router, private toastController: ToastController,
+    private animationCtrl: AnimationController, public alertController: AlertController) {
+
     this.usuario = new Usuario();
     this.usuario.nombreUsuario = '';
     this.usuario.password = '';
@@ -25,6 +29,17 @@ export class LoginPage implements OnInit {
     // this.usuario.nombreUsuario = 'Daniel';
     // this.usuario.password = '1234';
     // this.ingresar();
+    const title = this.animationCtrl.create()
+      .addElement(document.querySelector('.title'))
+      .duration(500)
+      .fromTo('transform', 'translateX(-100px)', 'translateX(0px)')
+      .play();
+
+    const loginCard = this.animationCtrl.create()
+      .addElement(document.querySelector('.login-card'))
+      .duration(600)
+      .fromTo('opacity', '0.1', '1')
+      .play();
   }
 
   public ingresar(): void {
@@ -33,7 +48,7 @@ export class LoginPage implements OnInit {
       return;
     }
 
-    this.mostrarMensaje('¡Bienvenido!');
+    this.mostrarMensaje('¡Ingreso Exitoso!');
 
 
     const navigationExtras: NavigationExtras = {
@@ -49,7 +64,7 @@ export class LoginPage implements OnInit {
     const navigationExtras: NavigationExtras = {
 
     };
-    this.router.navigate(['restablecer-contrasena'], navigationExtras);
+    this.router.navigate(['recover-password'], navigationExtras);
   }
 
 
@@ -58,7 +73,7 @@ export class LoginPage implements OnInit {
     const mensajeError = usuario.validarUsuario();
 
     if (mensajeError) {
-      this.mostrarMensaje(mensajeError);
+      this.mostrarAlerta(mensajeError);
       return false;
     }
 
@@ -68,9 +83,22 @@ export class LoginPage implements OnInit {
   async mostrarMensaje(mensaje: string, duracion?: number) {
     const toast = await this.toastController.create({
       message: mensaje,
-      duration: duracion ? duracion : 2000
+      duration: duracion ? duracion : 2000,
+      position: "top"
     });
     toast.present();
   }
 
+  async mostrarAlerta(mensaje: string) {
+    const alert = await this.alertController.create({
+      header: 'Alerta',
+      message: mensaje,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+  }
+  
 }
