@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
     private activeroute: ActivatedRoute,
     private router: Router, 
     private alertController: AlertController,
-    private animationController: AnimationController) {
+    private animationCtrl: AnimationController) {
 
     this.activeroute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -38,6 +38,20 @@ export class HomePage implements OnInit {
   public ngOnInit() {
     this.persona.nombre = '';
     this.persona.apellido = '';
+
+    const footer = this.animationCtrl.create()
+      .addElement(document.querySelector('.lala'))
+      .duration(1000)
+      .fromTo('transform', 'translateX(-300px)', 'translateX(0px)')
+      .play();
+
+    const card = this.animationCtrl.create()
+      .addElement(document.querySelector('.card'))
+      .addElement(document.querySelector('.bienvenido'))
+      .duration(600)
+      .fromTo('opacity', '0.1', '1')
+      .play();
+
   }
 
   public limpiarFormulario(): void {
