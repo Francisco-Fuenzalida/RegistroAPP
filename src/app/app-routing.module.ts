@@ -19,6 +19,11 @@ const routes: Routes = [
     path: 'recover-password',
     loadChildren: () => import('./pages/recover-password/recover-password.module').then( m => m.RecoverPasswordPageModule)
   },
+  {
+    path: 'scanqr',
+    loadChildren: () => import('./pages/scanqr/scanqr.module').then( m => m.ScanqrPageModule)
+  },
+
 ];
 
 @NgModule({

@@ -1,11 +1,12 @@
 import { getAttrsForDirectiveMatching } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { $ } from 'protractor';
 import { Usuario } from 'src/app/model/Usuario';
 import { Persona } from 'src/app/model/Persona';
 import { Animation, AnimationController } from '@ionic/angular';
+
 
 
 @Component({
@@ -84,6 +85,14 @@ export class HomePage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  public scan(): void {
+
+    const navigationExtras: NavigationExtras = {
+
+    };
+    this.router.navigate(['scanqr'], navigationExtras);
   }
 
 }
