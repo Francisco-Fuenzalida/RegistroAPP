@@ -12,6 +12,7 @@ import { Usuario } from 'src/app/model/Usuario';
 export class LoginPage implements OnInit {
 
 
+
   public usuario: Usuario;
 
   constructor(private router: Router, private toastController: ToastController) {
@@ -19,7 +20,6 @@ export class LoginPage implements OnInit {
     this.usuario.nombreUsuario = '';
     this.usuario.password = '';
   }
-
   public ngOnInit(): void {
 
     // this.usuario.nombreUsuario = 'Daniel';
@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
     const navigationExtras: NavigationExtras = {
 
     };
-    this.router.navigate(['restablecer-contrasena'], navigationExtras);
+    this.router.navigate(['recover-password'], navigationExtras);
   }
 
 
