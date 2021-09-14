@@ -26,9 +26,10 @@ export class LoginPage implements OnInit {
   }
   public ngOnInit(): void {
 
-    this.usuario.nombreUsuario = 'Daniel';
-    this.usuario.password = '1234';
-    this.ingresar();
+    // this.usuario.nombreUsuario = 'Daniel';
+    // this.usuario.password = '1234';
+    // this.ingresar();
+
     const title = this.animationCtrl.create()
       .addElement(document.querySelector('.title'))
       .duration(500)
