@@ -1,13 +1,12 @@
 <ion-content>
-  <div class="ion-padding-top ion-text-center title">
+  <div class="ion-padding-top ion-padding-bottom ion-text-center title">
     <ion-label>
       <h1>RegistroAPP</h1>
       <p>Registra tu asistencia</p>
     </ion-label>
   </div>
-  
 
-  <ion-card class="ion-text-center ion-padding-vertical login-card">
+  <mat-card class="ion-text-center login-card" >
     <ion-card-title class="ion-text-center">
       <ion-label>
         <h2>¡Bienvenido!</h2>
@@ -15,7 +14,18 @@
     </ion-card-title>
 
     <ion-card-content>
-      <ion-item>
+      <form>
+        <mat-form-field appearance="fill">
+          <mat-label>Ingrese Usuario</mat-label>
+          <input matInput placeholder="Ej: Juan">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Ingrese Password</mat-label>
+          <input matInput type="password" placeholder="4 digitos">
+        </mat-form-field>
+        <button (click)="ingresar()" id="boton" mat-raised-button>Ingresar</button>
+      </form>
+      <!-- <ion-item>
         <ion-label position="floating">Usuario</ion-label>
         <ion-input type="text" [(ngModel)]="usuario.nombreUsuario"></ion-input>
       </ion-item>
@@ -27,11 +37,11 @@
         <ion-col size="12">
           <ion-button shape="block" (click)="ingresar()">Ingresar</ion-button>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
     </ion-card-content>
     <ion-label>
       <br />
       <a routerLink (click)="restablecer()">Restablecer Contraseña</a>
     </ion-label>
-  </ion-card>
+  </mat-card>
 </ion-content>

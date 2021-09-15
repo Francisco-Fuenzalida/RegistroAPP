@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
 
     const loginCard = this.animationCtrl.create()
       .addElement(document.querySelector('.login-card'))
-      .duration(600)
+      .duration(1000)
       .fromTo('opacity', '0.1', '1')
       .play();
   }
