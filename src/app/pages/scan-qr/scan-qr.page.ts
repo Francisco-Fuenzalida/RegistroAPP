@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { ToastController, LoadingController, Platform } from '@ionic/angular';
 import jsQR from 'jsqr';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+import { Animation, AnimationController } from '@ionic/angular';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class ScanQrPage implements OnInit {
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
     private plt: Platform,
-    private qrScanner: QRScanner
+    private qrScanner: QRScanner,
+    private animationCtrl: AnimationController
   ) {
     const isInStandaloneMode = () =>
       'standalone' in window.navigator && window.navigator['standalone'];
@@ -73,6 +75,19 @@ export class ScanQrPage implements OnInit {
     // Optionally request the permission early
     this.qrScanner.prepare()
       .then((status: QRScannerStatus) => status.authorized);
+
+    const boton1 = this.animationCtrl.create()
+      .addElement(document.querySelector('.boton1'))
+      .duration(800)
+      .fromTo('transform', 'translateX(-300px)', 'translateX(0px)')
+      .play();
+
+    const boton2 = this.animationCtrl.create()
+      .addElement(document.querySelector('.boton2'))
+      .duration(800)
+      .fromTo('transform', 'translateX(300px)', 'translateX(0px)')
+      .play();
+
   }
 
   async startScan() {

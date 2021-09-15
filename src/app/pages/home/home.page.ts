@@ -41,7 +41,7 @@ export class HomePage implements OnInit {
     this.persona.apellido = '';
 
     const footer = this.animationCtrl.create()
-      .addElement(document.querySelector('.lala'))
+      .addElement(document.querySelector('.footer'))
       .duration(1000)
       .fromTo('transform', 'translateX(-300px)', 'translateX(0px)')
       .play();
