@@ -37,10 +37,21 @@ export class RecoverPasswordPage implements OnInit {
 
   public inicio(): void {
 
+    this.mostrarMensaje('¡Se ha enviado un correo para restablecer su contraseña!');
+
     const navigationExtras: NavigationExtras = {
 
     };
     this.router.navigate(['login'], navigationExtras);
+  }
+
+  async mostrarMensaje(mensaje: string, duracion?: number) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: duracion ? duracion : 2000,
+      position: "top"
+    });
+    toast.present();
   }
 
 }
