@@ -14,17 +14,16 @@
     </ion-card-title>
 
     <ion-card-content>
-      <form>
         <mat-form-field appearance="fill">
           <mat-label>Ingrese Usuario</mat-label>
-          <input matInput placeholder="Ej: Juan">
+          <input matInput placeholder="Ej: Juan" [(ngModel)]="usuario.nombreUsuario">
         </mat-form-field>
+        
         <mat-form-field appearance="fill">
           <mat-label>Ingrese Password</mat-label>
-          <input matInput type="password" placeholder="4 digitos">
+          <input matInput type="password" placeholder="4 digitos" [(ngModel)]="usuario.password">
         </mat-form-field>
         <button (click)="ingresar()" id="boton" mat-raised-button>Ingresar</button>
-      </form>
     </ion-card-content>
     <ion-label>
       <br />
