@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title> Ionic QR Scanner </ion-title>
+    <ion-title> Escaner QR </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,14 +15,14 @@
   />
 
   <!-- Trigger the file input -->
-  <ion-button expand="full" (click)="captureImage()">
-    <ion-icon slot="start" name="camera"></ion-icon>
-    Capture Image
+  <ion-button expand="full" color="success" (click)="captureImage()">
+    <ion-icon slot="start" name="image-outline"></ion-icon>
+    Abrir imagen
   </ion-button>
 
-  <ion-button expand="full" (click)="startScan()">
-    <ion-icon slot="start" name="qr-scanner"></ion-icon>
-    Start scan
+  <ion-button expand="full" color="success" (click)="startScan()">
+    <ion-icon slot="start" name="qr-code-outline"></ion-icon>
+    Escanear codigo
   </ion-button>
 
   <ion-button

@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ScanQrPageRoutingModule } from './scan-qr-routing.module';
 
 import { ScanQrPage } from './scan-qr.page';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ScanQrPageRoutingModule
+    ScanQrPageRoutingModule,
+    MatButtonModule
   ],
   declarations: [ScanQrPage]
 })
