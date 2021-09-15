@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { ToastController, LoadingController, Platform } from '@ionic/angular';
 import jsQR from 'jsqr';
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class ScanQrPage implements OnInit {
   constructor(
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private plt: Platform
+    private plt: Platform,
+    private qrScanner: QRScanner
   ) {
     const isInStandaloneMode = () =>
       'standalone' in window.navigator && window.navigator['standalone'];
@@ -38,6 +40,7 @@ export class ScanQrPage implements OnInit {
     this.canvasElement = this.canvas.nativeElement;
     this.canvasContext = this.canvasElement.getContext('2d');
     this.videoElement = this.video.nativeElement;
+
   }
 
   // Helper functions
@@ -67,9 +70,13 @@ export class ScanQrPage implements OnInit {
 
 
   ngOnInit() {
+    // Optionally request the permission early
+    this.qrScanner.prepare()
+      .then((status: QRScannerStatus) => status.authorized);
   }
 
   async startScan() {
+
     // Not working on iOS standalone mode!
     const stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: 'environment' }
@@ -84,6 +91,7 @@ export class ScanQrPage implements OnInit {
 
     this.videoElement.play();
     requestAnimationFrame(this.scan.bind(this));
+
   }
 
   async scan() {
