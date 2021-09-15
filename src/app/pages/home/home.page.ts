@@ -92,7 +92,7 @@ export class HomePage implements OnInit {
     const navigationExtras: NavigationExtras = {
 
     };
-    this.router.navigate(['scanqr'], navigationExtras);
+    this.router.navigate(['scan-qr'], navigationExtras);
   }
 
 }

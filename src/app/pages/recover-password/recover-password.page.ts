@@ -44,4 +44,3 @@ export class RecoverPasswordPage implements OnInit {
   }
 
 }
-

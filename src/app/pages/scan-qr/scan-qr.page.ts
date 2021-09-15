@@ -3,26 +3,24 @@ import { ToastController, LoadingController, Platform } from '@ionic/angular';
 import jsQR from 'jsqr';
 
 
-
-
 @Component({
-  selector: 'app-scanqr',
-  templateUrl: './scanqr.page.html',
-  styleUrls: ['./scanqr.page.scss'],
+  selector: 'app-scan-qr',
+  templateUrl: './scan-qr.page.html',
+  styleUrls: ['./scan-qr.page.scss'],
 })
-export class ScanqrPage implements OnInit {
+export class ScanQrPage implements OnInit {
 
   @ViewChild('video', { static: false }) video: ElementRef;
   @ViewChild('canvas', { static: false }) canvas: ElementRef;
   @ViewChild('fileinput', { static: false }) fileinput: ElementRef;
- 
+
   canvasElement: any;
   videoElement: any;
   canvasContext: any;
   scanActive = false;
   scanResult = null;
   loading: HTMLIonLoadingElement = null;
- 
+
   constructor(
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
@@ -35,13 +33,13 @@ export class ScanqrPage implements OnInit {
       // E.g. hide the scan functionality!
     }
   }
- 
+
   ngAfterViewInit() {
     this.canvasElement = this.canvas.nativeElement;
     this.canvasContext = this.canvasElement.getContext('2d');
     this.videoElement = this.video.nativeElement;
   }
- 
+
   // Helper functions
   async showQrToast() {
     const toast = await this.toastCtrl.create({
@@ -58,11 +56,11 @@ export class ScanqrPage implements OnInit {
     });
     toast.present();
   }
- 
+
   reset() {
     this.scanResult = null;
   }
- 
+
   stopScan() {
     this.scanActive = false;
   }
@@ -76,18 +74,18 @@ export class ScanqrPage implements OnInit {
     const stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: 'environment' }
     });
-   
+
     this.videoElement.srcObject = stream;
     // Required for Safari
     this.videoElement.setAttribute('playsinline', true);
-   
+
     this.loading = await this.loadingCtrl.create({});
     await this.loading.present();
-   
+
     this.videoElement.play();
     requestAnimationFrame(this.scan.bind(this));
   }
-   
+
   async scan() {
     if (this.videoElement.readyState === this.videoElement.HAVE_ENOUGH_DATA) {
       if (this.loading) {
@@ -95,10 +93,10 @@ export class ScanqrPage implements OnInit {
         this.loading = null;
         this.scanActive = true;
       }
-   
+
       this.canvasElement.height = this.videoElement.videoHeight;
       this.canvasElement.width = this.videoElement.videoWidth;
-   
+
       this.canvasContext.drawImage(
         this.videoElement,
         0,
@@ -115,7 +113,7 @@ export class ScanqrPage implements OnInit {
       const code = jsQR(imageData.data, imageData.width, imageData.height, {
         inversionAttempts: 'dontInvert'
       });
-   
+
       if (code) {
         this.scanActive = false;
         this.scanResult = code.data;
@@ -130,32 +128,32 @@ export class ScanqrPage implements OnInit {
     }
   }
 
-captureImage() {
-  this.fileinput.nativeElement.click();
-}
- 
-handleFile(files: FileList) {
-  const file = files.item(0);
- 
-  var img = new Image();
-  img.onload = () => {
-    this.canvasContext.drawImage(img, 0, 0, this.canvasElement.width, this.canvasElement.height);
-    const imageData = this.canvasContext.getImageData(
-      0,
-      0,
-      this.canvasElement.width,
-      this.canvasElement.height
-    );
-    const code = jsQR(imageData.data, imageData.width, imageData.height, {
-      inversionAttempts: 'dontInvert'
-    });
- 
-    if (code) {
-      this.scanResult = code.data;
-      this.showQrToast();
-    }
-  };
-  img.src = URL.createObjectURL(file);
-}
+  captureImage() {
+    this.fileinput.nativeElement.click();
+  }
+
+  handleFile(files: FileList) {
+    const file = files.item(0);
+
+    var img = new Image();
+    img.onload = () => {
+      this.canvasContext.drawImage(img, 0, 0, this.canvasElement.width, this.canvasElement.height);
+      const imageData = this.canvasContext.getImageData(
+        0,
+        0,
+        this.canvasElement.width,
+        this.canvasElement.height
+      );
+      const code = jsQR(imageData.data, imageData.width, imageData.height, {
+        inversionAttempts: 'dontInvert'
+      });
+
+      if (code) {
+        this.scanResult = code.data;
+        this.showQrToast();
+      }
+    };
+    img.src = URL.createObjectURL(file);
+  }
 
 }
