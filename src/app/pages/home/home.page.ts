@@ -4,7 +4,6 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { $ } from 'protractor';
 import { Usuario } from 'src/app/model/Usuario';
-import { Persona } from 'src/app/model/Persona';
 import { Animation, AnimationController } from '@ionic/angular';
 
 
@@ -19,7 +18,6 @@ export class HomePage implements OnInit {
 
   public usuario: Usuario;
 
-  public persona: Persona = new Persona();
 
   constructor(
     private activeroute: ActivatedRoute,
@@ -37,8 +35,6 @@ export class HomePage implements OnInit {
   }
 
   public ngOnInit() {
-    this.persona.nombre = '';
-    this.persona.apellido = '';
 
     const footer = this.animationCtrl.create()
       .addElement(document.querySelector('.footer'))
@@ -53,28 +49,6 @@ export class HomePage implements OnInit {
       .fromTo('opacity', '0.1', '1')
       .play();
 
-  }
-
-  public limpiarFormulario(): void {
-    for (const [key, value] of Object.entries(this.persona)) {
-      Object.defineProperty(this.persona, key, { value: '' });
-    }
-  }
-
-  public mostrarDatosPersona(): void {
-
-    if (this.persona.nombre.trim() === '' && this.persona.apellido === '') {
-      this.presentAlert('Datos personales', 'Para mostrar los datos de la persona, '
-        + 'al menos debe tener un valor para el nombre o el apellido.');
-      return;
-    }
-
-    const mensaje =
-      '<br>Usuario: ' + this.usuario.nombreUsuario
-      + '<br>Nombre: ' + this.persona.nombre
-      + '<br>Apellido: ' + this.persona.apellido
-
-    this.presentAlert('Datos personales', mensaje);
   }
 
   public async presentAlert(titulo: string, mensaje: string) {
