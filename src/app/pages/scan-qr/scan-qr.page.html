@@ -5,24 +5,14 @@
 </ion-header>
 
 <ion-content>
-  <!-- Fallback for iOS PWA -->
-  <input
-    #fileinput
-    type="file"
-    accept="image/*;capture=camera"
-    hidden
-    (change)="handleFile($event.target.files)"
-  />
-
-  <!-- Trigger the file input -->
-  <ion-button class="boton1" expand="full" color="success" (click)="captureImage()">
-    <ion-icon slot="start" name="image-outline"></ion-icon>
-    Abrir imagen
-  </ion-button>
-
-  <ion-button class="boton2" expand="full" color="success" (click)="startScan()">
-    <ion-icon slot="start" name="qr-code-outline"></ion-icon>
-    Escanear codigo
+  <ion-button
+    class="boton2"
+    expand="full"
+    color="success"
+    (click)="startScan()"
+  >
+    <ion-icon slot="start" name="videocam-outline"></ion-icon>
+    Iniciar Escaner
   </ion-button>
 
   <ion-button
@@ -32,7 +22,7 @@
     *ngIf="scanResult"
   >
     <ion-icon slot="start" name="refresh"></ion-icon>
-    Reset
+    Reiniciar
   </ion-button>
 
   <!-- Shows our camera stream -->
@@ -49,12 +39,12 @@
     *ngIf="scanActive"
   >
     <ion-icon slot="start" name="close"></ion-icon>
-    Stop scan
+    Detener Escaner
   </ion-button>
 
   <ion-card *ngIf="scanResult">
     <ion-card-header>
-      <ion-card-title>QR Code</ion-card-title>
+      <ion-card-title>Codigo QR</ion-card-title>
     </ion-card-header>
     <ion-card-content> {{ scanResult }} </ion-card-content>
   </ion-card>

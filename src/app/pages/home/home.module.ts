@@ -9,6 +9,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
     HomePageRoutingModule,
     MatCardModule,
     MatButtonModule,
+    ComponentsModule,
   ],
   declarations: [HomePage]
 })

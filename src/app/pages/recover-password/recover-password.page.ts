@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { ToastController, Animation, AnimationController } from '@ionic/angular';
+import { AlertController, ToastController, Animation, AnimationController } from '@ionic/angular';
 import { Usuario } from 'src/app/model/Usuario';
 
 @Component({
@@ -10,11 +10,11 @@ import { Usuario } from 'src/app/model/Usuario';
 })
 export class RecoverPasswordPage implements OnInit {
 
-  
+
 
   public usuario: Usuario;
 
-  constructor(private router: Router, private toastController: ToastController, private animationCtrl: AnimationController) {
+  constructor(private router: Router, private toastController: ToastController, private animationCtrl: AnimationController, private alertController: AlertController) {
     this.usuario = new Usuario();
     this.usuario.nombreUsuario = '';
     this.usuario.password = '';
@@ -29,13 +29,17 @@ export class RecoverPasswordPage implements OnInit {
       .play();
 
     const title = this.animationCtrl.create()
-    .addElement(document.querySelector('.title'))
-    .duration(1000)
-    .fromTo('opacity', '0.1', '1')
-    .play();
+      .addElement(document.querySelector('.title'))
+      .duration(1000)
+      .fromTo('opacity', '0.1', '1')
+      .play();
   }
 
   public inicio(): void {
+
+    if (!this.validarNombreUsuario(this.usuario)) {
+      return;
+    }
 
     this.mostrarMensaje('¡Se ha enviado un correo para restablecer su contraseña!');
 
@@ -43,6 +47,8 @@ export class RecoverPasswordPage implements OnInit {
 
     };
     this.router.navigate(['login'], navigationExtras);
+
+
   }
 
   async mostrarMensaje(mensaje: string, duracion?: number) {
@@ -52,6 +58,30 @@ export class RecoverPasswordPage implements OnInit {
       position: "top"
     });
     toast.present();
+  }
+
+  public validarNombreUsuario(usuario: Usuario): boolean {
+
+    const mensajeError = usuario.validarNombreUsuario();
+
+    if (mensajeError) {
+      this.mostrarAlerta(mensajeError);
+      return false;
+    }
+
+    return true;
+  }
+
+  async mostrarAlerta(mensaje: string) {
+    const alert = await this.alertController.create({
+      header: 'Alerta',
+      message: mensaje,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
   }
 
 }

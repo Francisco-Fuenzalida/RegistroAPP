@@ -4,7 +4,7 @@ export class Usuario {
 
     public validarNombreUsuario(): string {
         if (this.nombreUsuario.trim() === '') {
-            return 'Para ingresar al sistema debe ingresar un nombre de usuario.';
+            return 'El nombre de usuario no puede estar en blanco.';
         }
         if (this.nombreUsuario.length < 3 || this.nombreUsuario.length > 9) {
             return 'El nombre de usuario debe tener entre 3 y 9 caracteres.';

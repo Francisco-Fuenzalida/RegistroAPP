@@ -1,11 +1,9 @@
-import { getAttrsForDirectiveMatching } from '@angular/compiler/src/render3/view/util';
+// import { getAttrsForDirectiveMatching } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { AlertController } from '@ionic/angular';
 import { $ } from 'protractor';
 import { Usuario } from 'src/app/model/Usuario';
-import { Animation, AnimationController } from '@ionic/angular';
-
+import { AnimationController } from '@ionic/angular';
 
 
 @Component({
@@ -21,8 +19,7 @@ export class HomePage implements OnInit {
 
   constructor(
     private activeroute: ActivatedRoute,
-    private router: Router, 
-    private alertController: AlertController,
+    private router: Router,
     private animationCtrl: AnimationController) {
 
     this.activeroute.queryParams.subscribe(params => {
@@ -32,9 +29,19 @@ export class HomePage implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+
   }
 
   public ngOnInit() {
+
+    this.router.navigate(['home/principal']);
+
+    const navigationExtras: NavigationExtras = {
+      state: {
+        usuario: this.usuario
+      }
+    };
+    this.router.navigate(['/home/principal'], navigationExtras);
 
     const footer = this.animationCtrl.create()
       .addElement(document.querySelector('.footer'))
@@ -42,31 +49,11 @@ export class HomePage implements OnInit {
       .fromTo('transform', 'translateX(-300px)', 'translateX(0px)')
       .play();
 
-    const card = this.animationCtrl.create()
-      .addElement(document.querySelector('.card'))
-      .addElement(document.querySelector('.bienvenido'))
-      .duration(600)
-      .fromTo('opacity', '0.1', '1')
-      .play();
-
   }
 
-  public async presentAlert(titulo: string, mensaje: string) {
-    const alert = await this.alertController.create({
-      header: titulo,
-      message: mensaje,
-      buttons: ['OK']
-    });
-
-    await alert.present();
-  }
-
-  public scan(): void {
-
-    const navigationExtras: NavigationExtras = {
-
-    };
-    this.router.navigate(['scan-qr'], navigationExtras);
+  segmentChanged($event) {
+    let direccion = $event.detail.value;
+    this.router.navigate(['home/' + direccion]);
   }
 
 }
