@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Sistema de Asistencia DUOC</ion-title>
+        <ion-buttons slot="primary">
+      <ion-button (click)="logout()" color="danger" fill="outline">
+        Salir
+        <ion-icon slot="end" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 
   <ion-toolbar>

@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
 import { ToastController, AlertController, Animation, AnimationController } from '@ionic/angular';
+
+import { DBTaskService } from 'src/app/services/dbtask.service';
+import { Router, NavigationExtras } from '@angular/router';
+import { Storage } from '@ionic/storage';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+
 import { type } from 'os';
 import { Usuario } from 'src/app/model/Usuario';
+
 
 
 @Component({
@@ -13,22 +19,28 @@ import { Usuario } from 'src/app/model/Usuario';
 
 export class LoginPage implements OnInit {
 
+  login:any={
+    Usuario:"",
+    Password:""
+  }
+
+  field:string="";
+
 
 
   public usuario: Usuario;
 
-  constructor(private router: Router, private toastController: ToastController,
-    private animationCtrl: AnimationController, public alertController: AlertController) {
-
-    this.usuario = new Usuario();
-    this.usuario.nombreUsuario = '';
-    this.usuario.password = '';
-  }
+  constructor(private router: Router, 
+    public dbtaskService: DBTaskService,
+    private toastController: ToastController,
+    private storage: Storage,
+    private animationCtrl: AnimationController, 
+    public alertController: AlertController,
+    public authenticationSerive:AuthenticationService
+) {}
   public ngOnInit(): void {
 
-    // this.usuario.nombreUsuario = 'Daniel';
-    // this.usuario.password = '1234';
-    // this.ingresar();
+
 
     const title = this.animationCtrl.create()
       .addElement(document.querySelector('.title'))
@@ -43,22 +55,17 @@ export class LoginPage implements OnInit {
       .play();
   }
 
-  public ingresar(): void {
-
-    if (!this.validarUsuario(this.usuario)) {
-      return;
+    ingresar(){
+    
+    if(this.validateModel(this.login)){
+      
+      this.authenticationSerive.login(this.login);
     }
-
-    this.mostrarMensaje('¡Ingreso Exitoso!');
-
-
-    const navigationExtras: NavigationExtras = {
-      state: {
-        usuario: this.usuario
-      }
-    };
-    this.router.navigate(['/home'], navigationExtras);
+    else{
+      this.presentToast("Falta: "+this.field);
+    }
   }
+
 
   public restablecer(): void {
 
@@ -68,18 +75,104 @@ export class LoginPage implements OnInit {
     this.router.navigate(['recover-password'], navigationExtras);
   }
 
-
-  public validarUsuario(usuario: Usuario): boolean {
-
-    const mensajeError = usuario.validarUsuario();
-
-    if (mensajeError) {
-      this.mostrarAlerta(mensajeError);
-      return false;
+  registrar(){
+    this.createSesionData(this.login);
+  }
+  /**
+   * Función que genera (registra) una nueva sesión
+   * @param login 
+   */
+  createSesionData(login: any) {
+    if(this.validateModel(login)){ 
+      /**
+       * Se hace una copia del login, se hace así ya que
+       * el operador '=' no haceuna copia de los datos, si no
+       * que crea una nueva referencia a los mismos datos.
+       * Por eso se utiliza el Object.assign
+       */
+      let copy = Object.assign({},login);
+      copy.Active=1; 
+      this.dbtaskService.createSesionData(copy) 
+      .then((data)=>{ 
+        this.presentToast("Bienvenido"); 
+        this.storage.set("USER_DATA",data);  
+        this.router.navigate(['home']); 
+      })
+      .catch((error)=>{
+        this.presentToast("El usuario ya existe");
+      })
     }
-
+    else{
+      this.presentToast("Falta: "+this.field);
+    }
+  }
+  /**
+   * validateModel sirve para validar que se ingrese algo en los
+   * campos del html mediante su modelo
+   */
+  validateModel(model:any){
+    
+    for (var [key, value] of Object.entries(model)) {
+      
+      if (value=="") {
+      
+        this.field=key;
+        
+        return false;
+      }
+    }
     return true;
   }
+  /**
+   * Muestra un toast al usuario
+   * @param message Mensaje a presentar al usuario
+   * @param duration Duración el toast, este es opcional
+   */
+  async presentToast(message:string, duration?:number){
+    const toast = await this.toastController.create(
+      {
+        message:message,
+        duration:duration?duration:2000
+      }
+    );
+    toast.present();
+  }
+ 
+  ionViewWillEnter(){
+    console.log('ionViewDidEnter');
+      
+      this.dbtaskService.sesionActive()
+      .then((data)=>{
+        if(data!=undefined){
+          this.storage.set("USER_DATA",data); 
+          this.router.navigate(['home']);
+        }
+      })
+      .catch((error)=>{
+        console.error(error);
+        this.router.navigate(['login']);
+      })
+  }
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Creación de Usuario',
+      message: 'Mensaje <strong>El usuario no existe, desea registrarse?</strong>',
+      buttons: [
+        {
+          text: 'NO',
+          role: 'cancel'
+        }, {
+          text: 'SI',
+          handler: () => {
+            this.createSesionData(this.login)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 
   async mostrarMensaje(mensaje: string, duracion?: number) {
     const toast = await this.toastController.create({

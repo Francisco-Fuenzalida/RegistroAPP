@@ -4,6 +4,8 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { $ } from 'protractor';
 import { Usuario } from 'src/app/model/Usuario';
 import { AnimationController } from '@ionic/angular';
+import { DBTaskService } from 'src/app/services/dbtask.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -20,7 +22,10 @@ export class HomePage implements OnInit {
   constructor(
     private activeroute: ActivatedRoute,
     private router: Router,
-    private animationCtrl: AnimationController) {
+    private animationCtrl: AnimationController,
+    public dbtaskService: DBTaskService,
+    public authenticationSerive:AuthenticationService
+    ) {
 
     this.activeroute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -54,6 +59,17 @@ export class HomePage implements OnInit {
   segmentChanged($event) {
     let direccion = $event.detail.value;
     this.router.navigate(['home/' + direccion]);
+  }
+
+  ionViewWillEnter(){
+    this.router.navigate(['home/perfil']);
+  }
+  /**
+   * Función que permite cerrar la sesión actual
+   * actualiza el sesion_data de SQLite
+   */
+  logout(){
+    this.authenticationSerive.logout();
   }
 
 }
