@@ -4,11 +4,15 @@ import { CommonModule } from "@angular/common";
 import { IonicModule } from "@ionic/angular";
 import { PrincipalComponent } from "./principal/principal.component";
 import { PerfilComponent } from "./perfil/perfil.component";
+import { MapaComponent } from './mapa/mapa.component';
+
 // imports de Angular Material
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+
+
 
 @NgModule({
     imports: [
@@ -23,11 +27,16 @@ import { MatDialogModule } from '@angular/material/dialog';
     declarations: [
         PrincipalComponent,
         PerfilComponent,
+        MapaComponent,
+        
     ],
     exports: [
         PrincipalComponent,
         PerfilComponent,
+        MapaComponent,
         FormsModule,
+        
+        
     ],
 })
 export class ComponentsModule {}

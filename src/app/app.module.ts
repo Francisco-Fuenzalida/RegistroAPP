@@ -17,6 +17,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
